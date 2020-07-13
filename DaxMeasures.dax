@@ -1,0 +1,11 @@
+LastOrderDate = LASTDATE(FactOrders[OrderDate])
+FirstOrderDate = FIRSTDATE(FactOrders[OrderDate])
+MonthesActivity = DATEDIFF([FirstOrderDate],[LastOrderDate],MONTH)+1
+OrdersCount = DISTINCTCOUNT(FactOrders[OrderID])
+TotalSales = SUMX(FactOrders,FactOrders[Quantity]*FactOrders[UnitPrice])
+Sales%OfTotal = 
+DIVIDE([TotalSales],CALCULATE([TotalSales],ALL(FactOrders)))
+MonthsSinceLastOrder = 
+    DATEDIFF([LastOrderDate]
+            ,CALCULATE(MAX(FactOrders[OrderDate]),ALL(FactOrders)) //In order to calculate the last order in the FactOrders table
+                ,MONTH)
