@@ -7,8 +7,8 @@ TotalSales = SUMX(FactOrders,FactOrders[Quantity]*FactOrders[UnitPrice])
 Sales%OfTotal = 
     DIVIDE([TotalSales],CALCULATE([TotalSales],ALL(FactOrders)))
     
-MonthesActivity = DATEDIFF([FirstOrderDate],[LastOrderDate],MONTH)+1 //+1 in order to avoid divide in 0
-SalesOverActivityMonths = DIVIDE([TotalSales],[MonthesActivity])
+MonthsActivity = DATEDIFF([FirstOrderDate],[LastOrderDate],MONTH)+1 //+1 in order to avoid divide in 0
+SalesOverActivityMonths = DIVIDE([TotalSales],[MonthsActivity])
 
 MonthsSinceLastOrder = 
     DATEDIFF([LastOrderDate]
