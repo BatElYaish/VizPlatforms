@@ -1,10 +1,15 @@
 LastOrderDate = LASTDATE(FactOrders[OrderDate])
 FirstOrderDate = FIRSTDATE(FactOrders[OrderDate])
-MonthesActivity = DATEDIFF([FirstOrderDate],[LastOrderDate],MONTH)+1
+
 OrdersCount = DISTINCTCOUNT(FactOrders[OrderID])
 TotalSales = SUMX(FactOrders,FactOrders[Quantity]*FactOrders[UnitPrice])
+
 Sales%OfTotal = 
-DIVIDE([TotalSales],CALCULATE([TotalSales],ALL(FactOrders)))
+    DIVIDE([TotalSales],CALCULATE([TotalSales],ALL(FactOrders)))
+    
+MonthesActivity = DATEDIFF([FirstOrderDate],[LastOrderDate],MONTH)+1 //+1 in order to avoid divide in 0
+SalesOverActivityMonths = DIVIDE([TotalSales],[MonthesActivity])
+
 MonthsSinceLastOrder = 
     DATEDIFF([LastOrderDate]
             ,CALCULATE(MAX(FactOrders[OrderDate]),ALL(FactOrders)) //In order to calculate the last order in the FactOrders table
